@@ -61,6 +61,22 @@ const DATA = [
   {date:'2026-04-25',mun:'حزق اللوزة',ton:10,mk:0,type:'رفع فضلات منزلية',places:'المنطقة البلدية',workers:'أعوان البلدية',equip:'—'},
   {date:'2026-04-25',mun:'ساقية الدائر',ton:94,mk:0,type:'رفع المصبات العشوائية / رفع النقاط السوداء / جهر الاتربة / كنس يدوي / تشذيب أشجار النخيل',places:'السوق الاسبوعي / سوق الحطاب / نهج المدرسة الاعدادية / وسط الساقية',workers:'أعوان البلدية',equip:'—'},
   {date:'2026-04-25',mun:'طينة',ton:47,mk:1000,type:'كنس حواشي الأرصفة / تقليع الأعشاب / رفع نقاط سوداء',places:'زنقة ميلاد / محيط معهد طينة / الملعب البلدي / حي البدراني',workers:'أعوان البلدية',equip:'02 شاحنة قالبة / 02 آلة تراكتوبال / معدات يدوية'},
+
+  // ══ بيانات 27 أفريل 2026 (مصدر: sfax_nettoyage_dashboard_v3) ══
+  {date:'2026-04-27',mun:'الصخيرة',ton:11,mk:0,type:'تنظيف حواشي الطرقات / رفع فضلات مختلفة',places:'شارع جمال عبد الناصر / حي الأمل 1 و 2 / الحي التجاري',workers:'—',equip:'02 شاحنة قالبة / آلة تراكتوبال'},
+  {date:'2026-04-27',mun:'المحرس',ton:116,mk:0,type:'رفع فضلات منزلية / رفع فضلات مختلفة / إزالة فضلات بلاستيكية / إزالة مصب عشوائي / تجميع فضلات الهدم',places:'طريق فلمش / المنطقة البلدية باب باب / شارع فلسطين حي المعاصر / حي الهناء / شاطئ الشفار / نقطة وبوعكازين',workers:'—',equip:'—'},
+  {date:'2026-04-27',mun:'ساقية الزيت',ton:215,mk:1200,type:'كنس حواشي الأرصفة / تقليع الأعشاب / رفع الأتربة / رفع فضلات مختلفة',places:'شارع المختار الزيادي / شارع الطيب المهيري / سيدي صالح / تقسيم الأنس / شارع الإستقلال / شارع الهادي شاكر',workers:'أعوان البلدية / مقاولات النظافة',equip:'—'},
+  {date:'2026-04-27',mun:'العامرة',ton:200,mk:0,type:'كنس يدوي / رفع فضلات منزلية / رفع نقاط سوداء',places:'الطريق الرئيسي المهدية / جوار المكتبة العمومية / الطريق الرئيسي السلطنية',workers:'أعوان البلدية',equip:'معدات خفيفة / 02 شاحنات / bobcat / جرار ومجرورة / تراكس'},
+  {date:'2026-04-27',mun:'الشيحية',ton:91,mk:0,type:'معالجة النقاط السوداء / كنس الأتربة وإزالة الأعشاب / رفع فضلات منزلية / تشذيب أشجار التصفيف / تنظيف محيط الحاويات',places:'شارع الطبلبي / شارع الحرية / شارع المنجي سليم / شارع أبو القاسم الشابي / شارع البيئة / شارع الحبيب بورقيبة',workers:'—',equip:'02 شاحنة / 02 مجرورة'},
+  {date:'2026-04-27',mun:'الغريبة',ton:20,mk:0,type:'حملة نظافة',places:'شارع الجمهورية / شارع المغرب العربي',workers:'—',equip:'—'},
+  {date:'2026-04-27',mun:'النصر',ton:2,mk:0,type:'رفع فضلات منزلية',places:'منطقة الغرابة عمادة النصر',workers:'—',equip:'جرار / شاحنة'},
+  {date:'2026-04-27',mun:'جبنيانة',ton:90,mk:0,type:'رفع الفواضل المختلفة',places:'طريق أولاد حمد / أمام مركز التكوين المهني / حديقة بالمحاجبة',workers:'—',equip:'—'},
+  {date:'2026-04-27',mun:'حزق اللوزة',ton:70,mk:0,type:'حملة نظافة / رفع فضلات منزلية / تنظيف حواشي الطرقات',places:'المنطقة البلدية',workers:'—',equip:'—'},
+  {date:'2026-04-27',mun:'عقارب',ton:35,mk:1000,type:'رفع مصبات عشوائية / كنس / أشغال بستنة',places:'شارع علي البلهوان / شارع الحبيب ثامر / طريق الوادي الكبير / المنتزه البلدي / شارع الحبيب بورقيبة',workers:'—',equip:'شاحنة / Bobcat / مكنسة كهربائية / جرار'},
+  {date:'2026-04-27',mun:'منزل شاكر',ton:25,mk:0,type:'تنظيف وكنس / قلع الأعشاب الطفيلية / رفع الفضلات المنزلية',places:'محيط المعتمدية / محيط البلدية / المعهد الثانوي / عمادة منزل شاكر / عمادة الحاج قاسم',workers:'12 عامل',equip:'آلة شحن صغيرة / جرار ومجرورة / 02 شاحنة ضاغطة'},
+  {date:'2026-04-27',mun:'قرمدة',ton:107,mk:0,type:'معالجة نقاط سوداء / كنس الأتربة / إزالة الأعشاب / رفع فضلات منزلية',places:'نهج القيروان / شارع فلسطين / مدخل مقبرتي الرشاد / شارع الشهداء / نهج غرة ماي / طريق قرمدة',workers:'أعوان النظافة / مقاولة التنظيف',equip:'—'},
+  {date:'2026-04-27',mun:'ساقية الدائر',ton:129,mk:0,type:'رفع المصبات العشوائية / رفع النقاط السوداء / جهر الاتربة / ازالة الاعشاب / رفع فضلات ردم / كنس يدوي / تشذيب أشجار النخيل',places:'نهج مقبرة يعيش / مسرب الحاج حمد / زنقة الحداد / شارع بوعلي / وسط الساقية / السوق الاسبوعي',workers:'—',equip:'—'},
+  {date:'2026-04-27',mun:'طينة',ton:77,mk:0,type:'كنس حواشي الأرصفة / تقليع الأعشاب / رفع نقاط سوداء',places:'قصاص التوتة / الطريق الرئيسية / حي المعز / مدخل طينة',workers:'أعوان البلدية',equip:'02 شاحنة قالبة / آلة تراكتوبال / معدات يدوية'},
 ];
 
 /* ═══════════════════════════════════════════
@@ -138,8 +154,18 @@ function getUniqueDates() {
   return [...new Set(DATA.map(r => r.date))].sort();
 }
 
+// قائمة شاملة لجميع بلديات ولاية صفاقس (بما فيها النور)
+const ALL_MUNS = [
+  'صفاقس','الصخيرة','المحرس','النور','ساقية الزيت','قرقنة',
+  'الحاجب','الحنشة','العوابد الخزانات','العامرة','الشيحية','العين',
+  'الغريبة','النصر','بئر علي الشمالية','بئر علي بن خليفة','جبنيانة',
+  'حزق اللوزة','عقارب','منزل شاكر','قرمدة','ساقية الدائر','طينة'
+];
+
 function getUniqueMuns() {
-  return [...new Set(DATA.map(r => r.mun))].sort((a, b) => a.localeCompare(b, 'ar'));
+  const fromData = [...new Set(DATA.map(r => r.mun))];
+  const combined = [...new Set([...ALL_MUNS, ...fromData])];
+  return combined.sort((a, b) => a.localeCompare(b, 'ar'));
 }
 
 function fmtDate(d) {
@@ -2028,7 +2054,7 @@ function renderReportStats() {
     btnWrap.innerHTML = muns.map((m, i) => {
       const [c1] = MUN_COLORS[i % MUN_COLORS.length];
       return `
-      <button class="mun-report-stat-btn" style="--mc:${c1}" onclick="openMunReportsPopup('${m.replace(/'/g,"\\'")}')">
+      <button class="mun-report-stat-btn" style="--mc:${c1}" onclick="openMunReportsPopup(${JSON.stringify(m)})">
         <img src="${getMunLogo(m)}" alt="${m}" class="mrb-logo" onerror="this.src=MUN_LOGOS['__gov__']">
         <div class="mrb-name">${m}</div>
         <div class="mrb-total">0</div>
@@ -2055,7 +2081,7 @@ function renderReportStats() {
     const s  = byMun[m] || { p:0, i:0, r:0 };
     const tot= s.p + s.i + s.r;
     return `
-    <button class="mun-report-stat-btn" style="--mc:${c1}" onclick="openMunReportsPopup('${m.replace(/'/g,"\\'")}')">
+    <button class="mun-report-stat-btn" style="--mc:${c1}" onclick="openMunReportsPopup(${JSON.stringify(m)})">
       <img src="${getMunLogo(m)}" alt="${m}" class="mrb-logo" onerror="this.src=MUN_LOGOS['__gov__']">
       <div class="mrb-name">${m}</div>
       <div class="mrb-total">${tot}</div>
@@ -2068,263 +2094,95 @@ function renderReportStats() {
   }).join('');
 }
 
-/* ═══════════════════════════════════════════
-   MRP — POPUP RÉCLAMATIONS PAR MUNICIPALITÉ
-   (Popup complet avec onglets Liste / Statistiques)
-═══════════════════════════════════════════ */
+/* ── Popup liste rapports par municipalité ── */
 let _currentMunReports = [];
 let _currentMunName    = '';
-let _mrpActiveTab      = 'list';
 
-/* ── Ouvre la popup ── */
 function openMunReportsPopup(munName) {
   _currentMunName    = munName;
-  _currentMunReports = _allReports.filter(r => r.municipality.trim() === munName.trim());
-  _mrpActiveTab      = 'list';
+  _currentMunReports = _allReports.filter(r => r.municipality === munName);
 
-  /* --- Logo --- */
-  const logoEl = document.getElementById('munReportsPopupLogo');
-  if (logoEl) {
-    const src = getMunLogo(munName);
-    logoEl.innerHTML = `<img src="${src}" alt="${munName}" onerror="this.src=MUN_LOGOS['__gov__']">`;
-  }
-
-  /* --- Nom --- */
+  const mrpLogoSrc = getMunLogo(munName);
+  document.getElementById('munReportsPopupLogo').innerHTML = `<img src="${mrpLogoSrc}" alt="${munName}" style="width:44px;height:44px;object-fit:contain;border-radius:8px;background:rgba(255,255,255,0.15);padding:4px" onerror="this.src=MUN_LOGOS['__gov__']">`;
   document.getElementById('munReportsPopupName').textContent = munName;
-
-  /* --- Stats --- */
   const total = _currentMunReports.length;
-  const p  = _currentMunReports.filter(r => r.status === 'pending').length;
-  const ip = _currentMunReports.filter(r => r.status === 'in_progress').length;
-  const v  = _currentMunReports.filter(r => r.status === 'resolved').length;
+  const p = _currentMunReports.filter(r => r.status==='pending').length;
+  const i = _currentMunReports.filter(r => r.status==='in_progress').length;
+  const v = _currentMunReports.filter(r => r.status==='resolved').length;
+  const high = _currentMunReports.filter(r => r.severity==='عالية').length;
+  const med  = _currentMunReports.filter(r => r.severity==='متوسطة').length;
+  const low  = _currentMunReports.filter(r => r.severity==='منخفضة').length;
   const resolvedRate = total > 0 ? Math.round((v / total) * 100) : 0;
 
-  document.getElementById('munReportsPopupSub').textContent =
-    total === 0 ? 'لا توجد بلاغات' : `${total} بلاغ مسجّل`;
+  document.getElementById('munReportsPopupSub').textContent = `${total} بلاغ مسجّل — نسبة الحل ${resolvedRate}%`;
+  document.getElementById('mrpBadgePending').textContent  = `⏳ ${p} انتظار`;
+  document.getElementById('mrpBadgeProgress').textContent = `🔧 ${i} معالجة`;
+  document.getElementById('mrpBadgeResolved').textContent = `✅ ${v} حُلّت`;
 
-  /* KPI pills */
-  const kpiData = [
-    { icon:'📋', val: total,         lbl:'إجمالي',   c:'rgba(255,255,255,.18)' },
-    { icon:'⏳', val: p,             lbl:'انتظار',   c:'rgba(254,243,199,.25)' },
-    { icon:'🔧', val: ip,            lbl:'معالجة',   c:'rgba(219,234,254,.25)' },
-    { icon:'✅', val: v,             lbl:'حُلّت',    c:'rgba(220,252,231,.25)' },
-  ];
-  document.getElementById('mrpKpiRow').innerHTML = kpiData.map(k => `
-    <div class="mrp-kpi" style="background:${k.c}">
-      <div>
-        <div class="mrp-kpi-val">${k.val}</div>
-        <div class="mrp-kpi-lbl">${k.icon} ${k.lbl}</div>
-      </div>
-    </div>`).join('');
+  // Mini severity bars injected after badges
+  let statsBar = document.getElementById('mrpStatsBar');
+  if (!statsBar) {
+    const header = document.getElementById('munReportsPopupHeader');
+    statsBar = document.createElement('div');
+    statsBar.id = 'mrpStatsBar';
+    statsBar.style.cssText = 'margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;';
+    header.appendChild(statsBar);
+  }
+  statsBar.innerHTML = total === 0 ? '' : `
+    <div style="background:rgba(255,255,255,0.12);border-radius:10px;padding:5px 11px;font-size:10px;font-weight:800;color:#fca5a5">🔴 عالية: ${high}</div>
+    <div style="background:rgba(255,255,255,0.12);border-radius:10px;padding:5px 11px;font-size:10px;font-weight:800;color:#fde68a">🟡 متوسطة: ${med}</div>
+    <div style="background:rgba(255,255,255,0.12);border-radius:10px;padding:5px 11px;font-size:10px;font-weight:800;color:#bbf7d0">🟢 منخفضة: ${low}</div>
+    <div style="background:rgba(255,255,255,0.12);border-radius:10px;padding:5px 11px;font-size:10px;font-weight:800;color:#a5f3fc">📊 نسبة الحل: ${resolvedRate}%</div>
+  `;
 
-  /* Progress bar */
-  const pw = document.getElementById('mrpProgressWrap');
-  if (pw && total > 0) {
-    pw.style.display = 'block';
-    document.getElementById('mrpProgressPct').textContent = `${resolvedRate}%`;
-    setTimeout(() => {
-      const fill = document.getElementById('mrpProgressFill');
-      if (fill) fill.style.width = resolvedRate + '%';
-    }, 80);
-  } else if (pw) { pw.style.display = 'none'; }
-
-  /* --- Reset tab & filters --- */
-  mrpSwitchTab('list');
-  const fs = document.getElementById('mrpFilterStatus');
-  const fv = document.getElementById('mrpFilterSev');
-  if (fs) fs.value = '';
-  if (fv) fv.value = '';
+  if (document.getElementById('mrpFilterStatus')) document.getElementById('mrpFilterStatus').value = '';
+  if (document.getElementById('mrpFilterSev'))    document.getElementById('mrpFilterSev').value    = '';
 
   renderMunReportsList();
-
-  document.getElementById('munReportsPopupBg').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.getElementById('munReportsPopupBg')?.classList.add('open');
 }
 
-/* ── Switch entre onglets ── */
-function mrpSwitchTab(tab) {
-  _mrpActiveTab = tab;
-  document.getElementById('mrpTabList').classList.toggle('active', tab === 'list');
-  document.getElementById('mrpTabStats').classList.toggle('active', tab === 'stats');
-  document.getElementById('mrpPanelList').style.display  = tab === 'list'  ? '' : 'none';
-  document.getElementById('mrpPanelStats').style.display = tab === 'stats' ? '' : 'none';
-  document.getElementById('mrpFilterBar').style.display  = tab === 'list'  ? '' : 'none';
-  if (tab === 'stats') renderMrpStats();
-}
-
-/* ── Liste des réclamations ── */
 function renderMunReportsList() {
-  const list  = document.getElementById('munReportsPopupList');
-  const cntEl = document.getElementById('mrpCount');
+  const list    = document.getElementById('munReportsPopupList');
+  const cntEl   = document.getElementById('mrpCount');
   if (!list) return;
 
   const fStatus = document.getElementById('mrpFilterStatus')?.value || '';
   const fSev    = document.getElementById('mrpFilterSev')?.value    || '';
 
   let rows = _currentMunReports;
-  if (fStatus) rows = rows.filter(r => r.status   === fStatus);
+  if (fStatus) rows = rows.filter(r => r.status === fStatus);
   if (fSev)    rows = rows.filter(r => r.severity === fSev);
-
-  if (cntEl) cntEl.textContent = `${rows.length} بلاغ`;
+  if (cntEl)   cntEl.textContent = `${rows.length} بلاغ`;
 
   if (!rows.length) {
-    list.innerHTML = `<div class="mrp-empty"><div class="mrp-empty-icon">📭</div>لا توجد بلاغات</div>`;
+    list.innerHTML = '<div class="empty-state"><span>📭</span>لا توجد بلاغات</div>';
     return;
   }
 
-  list.innerHTML = rows.map((r, idx) => {
-    const sevClass    = r.severity === 'عالية' ? 'mrp-sev-high' : r.severity === 'متوسطة' ? 'mrp-sev-med' : 'mrp-sev-low';
-    const sevColor    = r.severity === 'عالية' ? '#dc2626'      : r.severity === 'متوسطة' ? '#d97706'      : '#059669';
-    const statusClass = r.status === 'pending' ? 'mrp-status-pending' : r.status === 'in_progress' ? 'mrp-status-in_progress' : 'mrp-status-resolved';
-    const statusTxt   = r.status === 'pending' ? '⏳ انتظار'          : r.status === 'in_progress' ? '🔧 جارٍ المعالجة'       : '✅ تمّت المعالجة';
-    const hasAnswer   = r.municipality_answer && r.municipality_answer.trim().length > 0;
-
+  list.innerHTML = rows.map(r => {
+    const sevColor = r.severity === 'عالية' ? '#dc2626' : r.severity === 'متوسطة' ? '#b45309' : '#059669';
     return `
-    <div class="mrp-card" id="mrpCard${idx}" onclick="mrpToggleCard(${idx})">
-      <div class="mrp-card-top">
-        <div class="mrp-card-sev" style="background:${sevColor}"></div>
-        <div class="mrp-card-body">
-          <div class="mrp-card-num">بلاغ #${r.id || (idx + 1)}</div>
-          <div class="mrp-card-loc">📍 ${r.location || '—'}</div>
-          <div class="mrp-card-desc">${r.description || '—'}</div>
-          <div class="mrp-card-tags">
-            <span class="mrp-sev-tag ${sevClass}">${r.severity || '—'}</span>
-            <span class="mrp-status-tag ${statusClass}">${statusTxt}</span>
-          </div>
-          ${hasAnswer ? `<div class="mrp-card-expand">▼ إجابة البلدية</div>
-          <div class="mrp-card-answer">💬 ${r.municipality_answer}</div>` : ''}
+    <button class="mrp-row" onclick="openReportPopup(${JSON.stringify(r.id || r._id || '')})">
+      <div class="mrp-sev-dot" style="background:${sevColor}"></div>
+      <div class="mrp-info">
+        <div class="mrp-loc">${r.location || '—'}</div>
+        <div class="mrp-date">${r.created_at ? new Date(r.created_at).toLocaleDateString('ar-TN') : '—'}</div>
+        <div class="mrp-badges">
+          <span class="sev-badge ${r.severity==='عالية'?'sev-high':r.severity==='متوسطة'?'sev-med':'sev-low'}">${r.severity||'—'}</span>
+          <span class="status-label status-label-${r.status}">${r.status==='pending'?'⏳ انتظار':r.status==='in_progress'?'🔧 معالجة':'✅ حُلّت'}</span>
         </div>
       </div>
-    </div>`;
+    </button>`;
   }).join('');
 }
 
-/* ── Expand/collapse card ── */
-function mrpToggleCard(idx) {
-  const card = document.getElementById('mrpCard' + idx);
-  if (!card) return;
-  card.classList.toggle('expanded');
-}
-
-/* ── Onglet Statistiques ── */
-function renderMrpStats() {
-  const body = document.getElementById('mrpStatsBody');
-  if (!body) return;
-  const rpts = _currentMunReports;
-  const total = rpts.length;
-  if (total === 0) {
-    body.innerHTML = `<div class="mrp-empty"><div class="mrp-empty-icon">📊</div>لا توجد بيانات</div>`;
-    return;
-  }
-
-  const p  = rpts.filter(r => r.status === 'pending').length;
-  const ip = rpts.filter(r => r.status === 'in_progress').length;
-  const v  = rpts.filter(r => r.status === 'resolved').length;
-  const high = rpts.filter(r => r.severity === 'عالية').length;
-  const med  = rpts.filter(r => r.severity === 'متوسطة').length;
-  const low  = rpts.filter(r => r.severity === 'منخفضة').length;
-
-  /* Donut SVG */
-  function makeDonut(vals, colors, labels, cx, cy, R, r) {
-    const sum = vals.reduce((a,b) => a+b, 0);
-    if (!sum) return '<text x="' + cx + '" y="' + (cy+5) + '" text-anchor="middle" font-size="11" fill="var(--text-muted)">—</text>';
-    let start = -Math.PI / 2, paths = '';
-    vals.forEach((v, i) => {
-      if (!v) return;
-      const angle = (v / sum) * 2 * Math.PI;
-      const end = start + angle;
-      const x1=cx+R*Math.cos(start),y1=cy+R*Math.sin(start);
-      const x2=cx+R*Math.cos(end),  y2=cy+R*Math.sin(end);
-      const ix1=cx+r*Math.cos(start),iy1=cy+r*Math.sin(start);
-      const ix2=cx+r*Math.cos(end),  iy2=cy+r*Math.sin(end);
-      const lg = angle > Math.PI ? 1 : 0;
-      paths += `<path d="M${x1},${y1} A${R},${R} 0 ${lg},1 ${x2},${y2} L${ix2},${iy2} A${r},${r} 0 ${lg},0 ${ix1},${iy1} Z" fill="${colors[i]}" opacity=".9"><title>${labels[i]}: ${v}</title></path>`;
-      start = end;
-    });
-    return paths;
-  }
-
-  const statusVals   = [p, ip, v];
-  const statusColors = ['#f59e0b','#3b82f6','#10b981'];
-  const statusLabels = ['انتظار','معالجة','حُلّت'];
-
-  const sevVals   = [high, med, low];
-  const sevColors = ['#dc2626','#d97706','#059669'];
-  const sevLabels = ['عالية','متوسطة','منخفضة'];
-
-  body.innerHTML = `
-    <!-- Donut statuts -->
-    <div class="mrp-stat-section">
-      <div class="mrp-stat-title">توزيع حالات البلاغات</div>
-      <div class="mrp-donut-row">
-        <svg class="mrp-donut-svg" width="120" height="120" viewBox="0 0 120 120">
-          ${makeDonut(statusVals, statusColors, statusLabels, 60, 60, 52, 32)}
-          <text x="60" y="56" text-anchor="middle" font-size="18" font-weight="900" fill="var(--text)">${total}</text>
-          <text x="60" y="70" text-anchor="middle" font-size="9" fill="var(--text-muted)">إجمالي</text>
-        </svg>
-        <div class="mrp-donut-legend">
-          ${statusLabels.map((l, i) => statusVals[i] > 0 ? `
-          <div class="mrp-legend-row">
-            <div class="mrp-legend-dot" style="background:${statusColors[i]}"></div>
-            <span class="mrp-legend-label">${['⏳','🔧','✅'][i]} ${l}</span>
-            <span class="mrp-legend-val">${statusVals[i]}</span>
-            <span style="font-size:10px;color:var(--text-muted)">${Math.round(statusVals[i]/total*100)}%</span>
-          </div>` : '').join('')}
-        </div>
-      </div>
-    </div>
-
-    <!-- Donut gravité -->
-    <div class="mrp-stat-section">
-      <div class="mrp-stat-title">توزيع درجات الخطورة</div>
-      <div class="mrp-donut-row">
-        <svg class="mrp-donut-svg" width="120" height="120" viewBox="0 0 120 120">
-          ${makeDonut(sevVals, sevColors, sevLabels, 60, 60, 52, 32)}
-        </svg>
-        <div class="mrp-donut-legend">
-          ${sevLabels.map((l, i) => sevVals[i] > 0 ? `
-          <div class="mrp-legend-row">
-            <div class="mrp-legend-dot" style="background:${sevColors[i]}"></div>
-            <span class="mrp-legend-label">${['🔴','🟡','🟢'][i]} ${l}</span>
-            <span class="mrp-legend-val">${sevVals[i]}</span>
-            <span style="font-size:10px;color:var(--text-muted)">${Math.round(sevVals[i]/total*100)}%</span>
-          </div>` : '').join('')}
-        </div>
-      </div>
-    </div>
-
-    <!-- Barres de progression -->
-    <div class="mrp-stat-section">
-      <div class="mrp-stat-title">نسب الحالات</div>
-      <div class="mrp-bar-list">
-        ${[['⏳ انتظار',p,'#f59e0b'],['🔧 معالجة',ip,'#3b82f6'],['✅ حُلّت',v,'#10b981'],
-           ['🔴 عالية',high,'#dc2626'],['🟡 متوسطة',med,'#d97706'],['🟢 منخفضة',low,'#059669']]
-          .filter(x => x[1] > 0)
-          .map(([label, cnt, color]) => `
-          <div class="mrp-bar-item">
-            <div class="mrp-bar-top">
-              <span>${label}</span>
-              <span>${cnt} / ${total} (${Math.round(cnt/total*100)}%)</span>
-            </div>
-            <div class="mrp-bar-track">
-              <div class="mrp-bar-fill" style="width:${Math.round(cnt/total*100)}%;background:${color}"></div>
-            </div>
-          </div>`).join('')}
-      </div>
-    </div>
-  `;
-}
-
-/* ── Fermeture ── */
 function closeMunReportsPopup() {
   document.getElementById('munReportsPopupBg')?.classList.remove('open');
-  document.body.style.overflow = '';
 }
 function bgCloseMunReportsPopup(e) {
   if (e.target === document.getElementById('munReportsPopupBg')) closeMunReportsPopup();
 }
-
-
 
 /* ── Popup détail rapport ── */
 function openReportPopup(id) {

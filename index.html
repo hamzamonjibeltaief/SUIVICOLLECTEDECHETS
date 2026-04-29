@@ -18,7 +18,7 @@
     </div>
     <div class="topbar-title">
       <h1>لوحة متابعة أنشطة النظافة — بلديات ولاية صفاقس</h1>
-      <p>تدخلات رفع النقاط السوداء ومعالجة المصبات العشوائية • 21-25 أفريل 2026</p>
+      <p>تدخلات رفع النقاط السوداء ومعالجة المصبات العشوائية • 21-27 أفريل 2026</p>
       <div class="topbar-interval" id="interventionInterval">
         <span class="interval-icon">📅</span>
         <span id="intervalLabel">—</span>
@@ -182,6 +182,7 @@
         <button onclick="filterByDate('2026-04-23')" id="btn-date-23" data-date="2026-04-23" class="date-filter-btn">📅 23 أفريل</button>
         <button onclick="filterByDate('2026-04-24')" id="btn-date-24" data-date="2026-04-24" class="date-filter-btn">📅 24 أفريل</button>
         <button onclick="filterByDate('2026-04-25')" id="btn-date-25" data-date="2026-04-25" class="date-filter-btn">📅 25 أفريل</button>
+        <button onclick="filterByDate('2026-04-27')" id="btn-date-27" data-date="2026-04-27" class="date-filter-btn">📅 27 أفريل</button>
         <div id="qtyCount" style="font-size:11px;color:var(--text-muted);font-weight:600;background:var(--bg);border-radius:10px;padding:5px 12px;box-shadow:var(--neu-in)"></div>
       </div>
     </div>
@@ -209,7 +210,7 @@
   </div>
 
   <!-- ── REPORTS ADMIN ── -->
-  <div id="page-reports-admin" class="page">
+  <div id="page-reports-admin" class="page" id="printArea">
     <div class="reports-header">
       <div class="sec-title" style="--tc:#dc2626;margin:0">📋 إدارة البلاغات</div>
       <div style="display:flex;gap:8px;align-items:center">
@@ -352,67 +353,41 @@
 </div>
 
 <!-- ═══════════════ MUN REPORTS LIST POPUP ═══════════════ -->
-<!-- ═══════════ POPUP RÉCLAMATIONS PAR MUNICIPALITÉ ═══════════ -->
-<div class="mrp-bg" id="munReportsPopupBg" onclick="bgCloseMunReportsPopup(event)">
-  <div class="mrp-modal">
-
-    <!-- HEADER -->
-    <div class="mrp-header" id="munReportsPopupHeader">
-      <button class="mrp-close-btn" onclick="closeMunReportsPopup()">✕</button>
-      <div class="mrp-header-top">
-        <div class="mrp-logo-wrap" id="munReportsPopupLogo"></div>
-        <div class="mrp-header-info">
-          <div class="mrp-mun-name" id="munReportsPopupName">—</div>
-          <div class="mrp-mun-sub" id="munReportsPopupSub">—</div>
+<div class="mun-reports-popup-bg" id="munReportsPopupBg" onclick="bgCloseMunReportsPopup(event)">
+  <div class="mun-reports-popup">
+    <div class="mun-reports-popup-header" id="munReportsPopupHeader">
+      <button class="report-popup-close" onclick="closeMunReportsPopup()">✕</button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <div class="mun-popup-logo" id="munReportsPopupLogo" style="width:44px;height:44px;flex-shrink:0"></div>
+        <div>
+          <div style="font-size:17px;font-weight:900;color:#fff" id="munReportsPopupName">—</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.75);margin-top:2px" id="munReportsPopupSub">—</div>
         </div>
       </div>
-      <!-- KPI row -->
-      <div class="mrp-kpi-row" id="mrpKpiRow"></div>
-      <!-- Progress bar -->
-      <div class="mrp-progress-wrap" id="mrpProgressWrap" style="display:none">
-        <div class="mrp-progress-labels">
-          <span id="mrpProgressLabel">نسبة الحل</span>
-          <span id="mrpProgressPct">0%</span>
-        </div>
-        <div class="mrp-progress-track">
-          <div class="mrp-progress-fill" id="mrpProgressFill" style="width:0%"></div>
-        </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="rp-badge" id="mrpBadgePending" style="background:rgba(254,243,199,.2);color:#fde68a">⏳ 0 انتظار</span>
+        <span class="rp-badge" id="mrpBadgeProgress" style="background:rgba(219,234,254,.2);color:#bfdbfe">🔧 0 معالجة</span>
+        <span class="rp-badge" id="mrpBadgeResolved" style="background:rgba(220,252,231,.2);color:#bbf7d0">✅ 0 حُلّت</span>
       </div>
     </div>
-
-    <!-- TABS -->
-    <div class="mrp-tabs">
-      <button class="mrp-tab active" id="mrpTabList"   onclick="mrpSwitchTab('list')">📋 قائمة البلاغات</button>
-      <button class="mrp-tab"        id="mrpTabStats"  onclick="mrpSwitchTab('stats')">📊 إحصائيات</button>
-    </div>
-
-    <!-- FILTER BAR (list tab only) -->
-    <div class="mrp-filter-bar" id="mrpFilterBar">
-      <select id="mrpFilterStatus" class="filter-select" onchange="renderMunReportsList()">
+    <!-- Filter bar inside popup -->
+    <div style="padding:12px 20px;background:var(--bg-dark);border-bottom:1px solid var(--sh-dark);display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <select id="mrpFilterStatus" class="filter-select" style="min-width:120px;font-size:11px;padding:7px 11px" onchange="renderMunReportsList()">
         <option value="">كل الحالات</option>
         <option value="pending">⏳ انتظار</option>
         <option value="in_progress">🔧 معالجة</option>
-        <option value="resolved">✅ حُلّت</option>
+        <option value="resolved">✅ تم الحل</option>
       </select>
-      <select id="mrpFilterSev" class="filter-select" onchange="renderMunReportsList()">
+      <select id="mrpFilterSev" class="filter-select" style="min-width:110px;font-size:11px;padding:7px 11px" onchange="renderMunReportsList()">
         <option value="">كل الخطورة</option>
         <option value="عالية">🔴 عالية</option>
         <option value="متوسطة">🟡 متوسطة</option>
         <option value="منخفضة">🟢 منخفضة</option>
       </select>
-      <span id="mrpCount" class="mrp-count-badge"></span>
+      <span id="mrpCount" style="font-size:10px;color:var(--text-muted);font-weight:700;margin-right:auto"></span>
     </div>
-
-    <!-- TAB: LIST -->
-    <div class="mrp-tab-content" id="mrpPanelList">
-      <div id="munReportsPopupList" class="mrp-list"></div>
-    </div>
-
-    <!-- TAB: STATS -->
-    <div class="mrp-tab-content" id="mrpPanelStats" style="display:none">
-      <div class="mrp-stats-body" id="mrpStatsBody"></div>
-    </div>
-
+    <!-- List -->
+    <div id="munReportsPopupList" style="overflow-y:auto;max-height:420px;padding:12px 16px;display:flex;flex-direction:column;gap:8px"></div>
   </div>
 </div>
 
