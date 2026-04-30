@@ -183,6 +183,7 @@
         <button onclick="filterByDate('2026-04-24')" id="btn-date-24" data-date="2026-04-24" class="date-filter-btn">📅 24 أفريل</button>
         <button onclick="filterByDate('2026-04-25')" id="btn-date-25" data-date="2026-04-25" class="date-filter-btn">📅 25 أفريل</button>
         <button onclick="filterByDate('2026-04-27')" id="btn-date-27" data-date="2026-04-27" class="date-filter-btn">📅 27 أفريل</button>
+        <button onclick="filterByDate('2026-04-28')" id="btn-date-28" data-date="2026-04-28" class="date-filter-btn">📅 28 أفريل</button>
         <div id="qtyCount" style="font-size:11px;color:var(--text-muted);font-weight:600;background:var(--bg);border-radius:10px;padding:5px 12px;box-shadow:var(--neu-in)"></div>
       </div>
     </div>
@@ -499,6 +500,16 @@
 ══════════════════════════════════════ -->
 
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // Initialize EmailJS - replace YOUR_PUBLIC_KEY with your actual EmailJS public key
+  // Sign up free at https://emailjs.com and get your public key
+  (function(){
+    if (typeof emailjs !== 'undefined') {
+      emailjs.init({ publicKey: 'YOUR_PUBLIC_KEY' });
+    }
+  })();
+</script>
 <script src="app.js" defer></script>
 </body>
 </html>

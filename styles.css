@@ -438,7 +438,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);direction:rt
   align-items:center;justify-content:center;padding:16px;
   backdrop-filter:blur(6px);
 }
-.mun-reports-popup-bg.open{display:flex;animation:fadeIn .3s ease}
+.mun-reports-popup-bg.open,.mun-reports-popup-bg[style*="flex"]{display:flex !important;animation:fadeIn .3s ease}
 .mun-reports-popup{
   background:var(--bg);border-radius:24px;padding:0;
   width:100%;max-width:640px;box-shadow:var(--neu-lg);direction:rtl;
