@@ -102,6 +102,12 @@ const DATA = [
   {date:'2026-04-30',mun:'قرمدة',ton:110,mk:0,type:'رفع نقاط سوداء / رفع فضلات منزلية',places:'شارع الحبيب ثامر طريق الأفران / شارع الحبيب بورقيبة طريق قرمدة / شارع بوزيان / شارع الشهداء / شارع 02 مارس / شارع المنجي سليم / شارع محمود كريشان / تقسيم قرمدة الجديدة / شارع خالد إبن الوليد / شارع الهادي شاكر / شارع فرحات حشاد / نهج علي الزواوي / زنقة المزغني / شارع ابن سيناء / نهج القاضي عمر بن جماعة / نهج أبو القاسم الشابي',workers:'أعوان البلدية / مقاولة تنظيف',equip:'—'},
   {date:'2026-04-30',mun:'ساقية الدائر',ton:101,mk:0,type:'ازالة مصبات عشوائية / رفع فضلات مختلفة / كنس',places:'زنقة بشة / زنقة بن عطوش / نهج أبو القاسم الشابي / نهج الامام سحنون / من بشة الي مركز الحطاب / المستودع البلدي / وسط الساقية / شارع فرحات حشاد',workers:'أعوان البلدية',equip:'—'},
   {date:'2026-04-30',mun:'طينة',ton:42,mk:800,type:'ازالة مصبات عشوائية / رفع فضلات مختلفة / كنس',places:'الطريق الرئيسية / طريق المنطقة الصناعية',workers:'أعوان البلدية',equip:'عدد 01 تراكتوبال / عدد 02 شاحنة 7 م³ / معدات يدوية'},
+  // ── 02 ماي 2026 ──
+  {date:'2026-05-02',mun:'صفاقس',ton:9,mk:1320,type:'حملة نظافة مشتركة مع بلدية العين',places:'طريق المطار / دائرة حي الحبيب',workers:'أعوان البلدية / أعوان بلدية العين',equip:'—'},
+  {date:'2026-05-02',mun:'الشيحية',ton:90,mk:0,type:'جمع ورفع فضلات منزلية / معالجة نقاط سوداء / كنس',places:'شارع البيئة / شارع الحبيب بورقيبة / شارع قرطاج / شارع الطبلبي',workers:'أعوان البلدية',equip:'شاحنة'},
+  {date:'2026-05-02',mun:'العين',ton:60,mk:0,type:'جمع ورفع فضلات منزلية / معالجة نقاط سوداء / كنس',places:'طريق منزل شاكر الرئيسي / القاصة رقم 4 / المنطقة الصناعية',workers:'أعوان البلدية / أعوان بلدية صفاقس',equip:'—'},
+  {date:'2026-05-02',mun:'النصر',ton:4,mk:0,type:'جمع ورفع فضلات منزلية',places:'منطقة الغرابة عمادة النصر / الطريق الرئيسي بعمادة بئر الشعبة',workers:'أعوان البلدية',equip:'شاحنة'},
+  {date:'2026-05-02',mun:'ساقية الدائر',ton:171,mk:0,type:'جمع ورفع فضلات منزلية / معالجة نقاط سوداء / كنس / تدخلات أخرى',places:'نهج النور / التقسيم الشعري / نهج الياسمين / مسلك مقبرة يعيش / شارع الزيت / حي النور / وسط الساقية / الطريق الرئيسي مستوي بشة / شارع فرحات حشاد / من بشة الى مركز الحطاب',workers:'أعوان البلدية',equip:'—'},
 ];
 
 /* ═══════════════════════════════════════════
@@ -507,11 +513,6 @@ function renderMunGrid() {
     const rankClass = i === 0 ? 'tag-high' : i < 3 ? 'tag-med' : 'tag-low';
     const rankLabel = i === 0 ? '🥇 الأول' : i === 1 ? '🥈 الثاني' : i === 2 ? '🥉 الثالث' : `# ${i+1}`;
 
-    // Zones extraites des entries
-    const zones = [...new Set(
-      (d.entries || []).flatMap(e => (e.places || '').split('/').map(p => p.trim()).filter(Boolean))
-    )].slice(0, 4);
-
     return `
     <div class="mun-card" style="animation-delay:${Math.min(i * 0.04, 0.5)}s" onclick="openMunPopup(${i}, ${JSON.stringify(d.mun)})">
       <div class="mun-img-wrap" style="background:linear-gradient(135deg,${c1},${c2})">
@@ -530,9 +531,6 @@ function renderMunGrid() {
         </div>
         <span class="mun-tag ${rankClass}">${rankLabel} · ${share}%</span>
         ${d.mk > 0 ? `<div style="font-size:10px;color:#0891b2;font-weight:700;margin-bottom:6px">📏 ${d.mk.toLocaleString('ar')} م خ</div>` : ''}
-        <div class="zone-list">
-          ${zones.map(z => `<div class="zone-item"><div class="zone-dot" style="background:${c1}"></div>${z}</div>`).join('')}
-        </div>
         <button class="mun-report-btn" onclick="event.stopPropagation();openModalFor(${JSON.stringify(d.mun)})">
           🔴 إبلاغ عن نقطة سوداء
         </button>
@@ -633,7 +631,7 @@ function renderQtyTable(dateFilter) {
   if (!body) return;
 
   if (!rows.length) {
-    body.innerHTML = `<tr><td colspan="4" class="empty-state">
+    body.innerHTML = `<tr><td colspan="5" class="empty-state">
       <span>📭</span>لا توجد بيانات لهذا التاريخ
     </td></tr>`;
     return;
@@ -642,6 +640,7 @@ function renderQtyTable(dateFilter) {
   body.innerHTML = rows.map((r, i) => {
     const dateLabel = fmtDate(r.date);
     const typeShort = (r.type || '').split('/')[0].trim();
+    const placesShort = (r.places || '').split('/').slice(0, 2).map(p => p.trim()).filter(Boolean).join(' / ');
     return `
     <tr>
       <td style="color:var(--text-muted);font-weight:800">${i + 1}</td>
@@ -654,7 +653,8 @@ function renderQtyTable(dateFilter) {
         <span style="font-size:10px;color:var(--text-muted)"> طن</span>
         ${r.mk > 0 ? `<div style="font-size:10px;color:#0891b2;font-weight:700;margin-top:2px">${r.mk} م خ</div>` : ''}
       </td>
-      <td style="font-size:11px;color:var(--text-muted);max-width:260px;line-height:1.5">${typeShort}</td>
+      <td style="font-size:11px;color:var(--text-muted);max-width:220px;line-height:1.5">${typeShort}</td>
+      <td style="font-size:11px;color:var(--text-muted);max-width:220px;line-height:1.5">${placesShort}</td>
     </tr>`;
   }).join('');
 }
