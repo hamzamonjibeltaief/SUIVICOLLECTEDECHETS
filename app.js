@@ -488,21 +488,22 @@ function renderMunGrid() {
   const info = document.getElementById('filterInfo');
   if (!grid) return;
 
-  let data = getMunTotals('all');
+  const fromData = getMunTotals('all');
+  const fromDataMap = {};
+  fromData.forEach(d => { fromDataMap[d.mun] = d; });
+  let data = ALL_MUNS.map(mun => fromDataMap[mun] || { mun, ton: 0, mk: 0, days: 0, entries: [] });
 
-  // Filtres
   if (_munFilter.minTon > 0) data = data.filter(d => d.ton >= _munFilter.minTon);
   if (_munFilter.unit === 'ton')  data = data.filter(d => d.mk === 0);
   if (_munFilter.unit === 'mk')   data = data.filter(d => d.mk > 0);
 
-  // Tri
   if (_munFilter.sort === 'ton_desc') data.sort((a, b) => b.ton - a.ton);
   else if (_munFilter.sort === 'ton_asc') data.sort((a, b) => a.ton - b.ton);
   else data.sort((a, b) => a.mun.localeCompare(b.mun, 'ar'));
 
   const maxTon  = data[0]?.ton || 1;
   const grandTon = data.reduce((s, d) => s + d.ton, 0);
-  const allMuns = getMunTotals('all');
+  const allMuns = data;
 
   if (info) info.textContent = `عرض ${data.length} بلدية من ${allMuns.length} — إجمالي ${grandTon.toFixed(1)} طن`;
 
@@ -514,7 +515,7 @@ function renderMunGrid() {
     const rankLabel = i === 0 ? '🥇 الأول' : i === 1 ? '🥈 الثاني' : i === 2 ? '🥉 الثالث' : `# ${i+1}`;
 
     return `
-    <div class="mun-card" style="animation-delay:${Math.min(i * 0.04, 0.5)}s" onclick="openMunPopup(${i}, ${JSON.stringify(d.mun)})">
+    <div class="mun-card" style="animation-delay:${Math.min(i * 0.04, 0.5)}s" onclick="openMunPopup(${i}, '${d.mun}')">
       <div class="mun-img-wrap" style="background:linear-gradient(135deg,${c1},${c2})">
         <img src="${getMunLogo(d.mun)}" alt="${d.mun}" style="width:100%;height:100%;object-fit:contain;padding:12px;box-sizing:border-box;background:rgba(255,255,255,0.07)" onerror="this.src=MUN_LOGOS['__gov__']">
         <div class="mun-img-overlay">
@@ -543,41 +544,199 @@ function renderMunGrid() {
    11. MUNICIPALITY POPUP
 ═══════════════════════════════════════════ */
 function openMunPopup(idx, munName) {
-  const totals  = getMunTotals('all').sort((a, b) => b.ton - a.ton);
-  const d       = totals.find(t => t.mun === munName);
-  if (!d) return;
+  const totals   = getMunTotals('all').sort((a, b) => b.ton - a.ton);
+  const d        = totals.find(t => t.mun === munName) || { ton: 0, mk: 0, days: 0, entries: [] };
+  const rank     = totals.findIndex(t => t.mun === munName) + 1;
+  const colorIdx = ((typeof idx === 'number' && !isNaN(idx)) ? idx : 0) % MUN_COLORS.length;
+  const [c1, c2] = MUN_COLORS[colorIdx];
 
-  const rank    = totals.findIndex(t => t.mun === munName) + 1;
-  const [c1, c2]= MUN_COLORS[idx % MUN_COLORS.length];
+  // Helper : set element content safely
+  function setTxt(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
+  function setHtml(id, val) { const el = document.getElementById(id); if (el) el.innerHTML = val; }
+  function setStyle(id, prop, val) { const el = document.getElementById(id); if (el) el.style[prop] = val; }
 
   // Header
-  document.getElementById('munPopupHeader').style.setProperty('--mc', c1);
-  document.getElementById('munPopupHeader').style.background = `linear-gradient(135deg,${c1},${c2})`;
+  const hdr = document.getElementById('munPopupHeader');
+  if (hdr) {
+    hdr.style.background = `linear-gradient(135deg,${c1},${c2})`;
+    if (typeof hdr.style.setProperty === 'function') hdr.style.setProperty('--mc', c1);
+  }
+
+  // Logo
   const logoSrc = getMunLogo(munName);
-  document.getElementById('munPopupLogo').innerHTML = `<img src="${logoSrc}" alt="${munName}" style="width:100%;height:100%;object-fit:contain;border-radius:8px;background:rgba(255,255,255,0.1);padding:4px" onerror="this.src=MUN_LOGOS['__gov__']">`;
-  document.getElementById('munPopupName').textContent  = munName;
-  document.getElementById('munPopupRank').textContent  = `# ${rank} — ${Math.round((d.ton/getMunTotals('all').reduce((s,x)=>s+x.ton,0))*100)}%`;
-  document.getElementById('munPopupDate').textContent  = `📅 ${d.days} أيام نشاط`;
+  setHtml('munPopupLogo', `<img src="${logoSrc}" alt="${munName}" style="width:100%;height:100%;object-fit:contain;border-radius:8px;background:rgba(255,255,255,0.1);padding:4px" onerror="this.src=MUN_LOGOS['__gov__']">`);
+
+  // Texts
+  const grandTon = totals.reduce((s, x) => s + x.ton, 0) || 1;
+  setTxt('munPopupName', munName);
+  setTxt('munPopupRank', rank > 0 ? `# ${rank} — ${Math.round((d.ton / grandTon) * 100)}%` : '—');
+  setTxt('munPopupDate', `📅 ${d.days} أيام نشاط`);
 
   // Stats
-  document.getElementById('munPopupTon').textContent   = d.ton.toFixed(1) + ' طن';
-  document.getElementById('munPopupTon').style.color   = c1;
-  document.getElementById('munPopupMK').textContent    = d.mk > 0 ? d.mk.toLocaleString('ar') + ' م خ' : '—';
-  const zones = [...new Set((d.entries||[]).flatMap(e => (e.places||'').split('/').map(p=>p.trim()).filter(Boolean)))];
-  document.getElementById('munPopupZones').textContent = zones.length;
+  setTxt('munPopupTon', d.ton.toFixed(1) + ' طن');
+  setStyle('munPopupTon', 'color', c1);
+  setTxt('munPopupMK', d.mk > 0 ? d.mk.toLocaleString('ar') + ' م خ' : '—');
 
-  // Zones list
-  document.getElementById('munPopupAreas').innerHTML = zones.slice(0, 8).map(z => `
+  // Zones
+  const zones = [...new Set((d.entries || []).flatMap(e => (e.places || '').split('/').map(p => p.trim()).filter(Boolean)))];
+  setTxt('munPopupZones', zones.length);
+  setHtml('munPopupAreas', zones.slice(0, 8).map(z => `
     <div class="zone-item" style="margin-bottom:6px">
       <div class="zone-dot" style="background:${c1}"></div>
       <span style="font-size:11px">${z}</span>
-    </div>`).join('');
+    </div>`).join(''));
 
   // Report button
   const btn = document.getElementById('munPopupReportBtn');
   if (btn) { btn.onclick = () => { closeMunPopup(); openModalFor(munName); }; }
 
-  document.getElementById('munPopupBg').classList.add('open');
+  // Equipment data (from MUN_EQUIPMENT_DATA — enrichi par equipement.js si présent)
+  renderMunEquipment(munName);
+
+  // Open popup
+  const bg = document.getElementById('munPopupBg');
+  if (bg) bg.classList.add('open');
+  switchEquipTab('equipment');
+}
+
+/* ═══════════════════════════════════════════
+   EQUIPMENT DATA (from Excel)
+═══════════════════════════════════════════ */
+const MUN_EQUIPMENT_DATA = {
+  "المحرس": {"hr":22,"pop":45000,"equipment":[{"name":"شاحنة قالبة","count":1,"capacity":"10 طن"},{"name":"شاحنة ضاغطة","count":1,"capacity":"3,5 طن"},{"name":"شاحنة ضاغطة","count":1,"capacity":"16 م3"},{"name":"جرار ومجرورة","count":4,"capacity":"3 طن"},{"name":"شاحنة مجهزة بسلم","count":1,"capacity":""},{"name":"سيارة خفيفة قالبة","count":1,"capacity":""},{"name":"تراكتوبال","count":1,"capacity":""}]},
+  "عقارب": {"hr":0,"pop":0,"equipment":[{"name":"شاحنة","count":1,"capacity":""},{"name":"آلة جارفة","count":1,"capacity":""},{"name":"جرار","count":1,"capacity":""},{"name":"مكنسة كهربائية","count":1,"capacity":""}]},
+  "الشيحية": {"hr":23,"pop":30014,"equipment":[{"name":"شاحنة قالبة","count":3,"capacity":"7 طن"},{"name":"شاحنة قالبة","count":1,"capacity":"3 طن"},{"name":"شاحنة ضاغطة","count":2,"capacity":""},{"name":"تراكس","count":1,"capacity":""},{"name":"آلة جارفة","count":1,"capacity":""},{"name":"جرار","count":2,"capacity":""}]},
+  "الصخيرة": {"hr":13,"pop":0,"equipment":[{"name":"جرار","count":1,"capacity":"3,5 طن"},{"name":"شاحنة ضاغطة","count":2,"capacity":"7 طن"},{"name":"شاحنة","count":1,"capacity":"10 طن"},{"name":"شاحنة","count":1,"capacity":"7 طن"}]},
+  "العامرة": {"hr":18,"pop":33450,"equipment":[{"name":"تراكس","count":2,"capacity":""},{"name":"شاحنة قالبة","count":3,"capacity":""},{"name":"شاحنة","count":1,"capacity":""},{"name":"شاحنة رافعة","count":1,"capacity":""},{"name":"جرار","count":3,"capacity":""},{"name":"مجرورة","count":2,"capacity":""},{"name":"آلة جارفة","count":1,"capacity":""}]},
+  "النصر": {"hr":8,"pop":18393,"equipment":[{"name":"شاحنة","count":1,"capacity":"4"},{"name":"جرار فلاحي","count":3,"capacity":""},{"name":"تراكس","count":1,"capacity":""},{"name":"آلة جارفة صغيرة الحجم","count":1,"capacity":""}]},
+  "حزق اللوزة": {"hr":4,"pop":0,"equipment":[{"name":"تراكس","count":1,"capacity":""},{"name":"آلة جارفة","count":1,"capacity":""},{"name":"شاحنة ضاغطة","count":1,"capacity":""},{"name":"شاحنة قالبة","count":1,"capacity":""},{"name":"جرار","count":3,"capacity":""},{"name":"حاوية","count":192,"capacity":""}]},
+  "ساقية الدائر": {"hr":62,"pop":91000,"equipment":[{"name":"شاحنة قالبة","count":4,"capacity":""},{"name":"شاحنة ضاغطة","count":4,"capacity":""},{"name":"رافعات","count":3,"capacity":""},{"name":"جرارات","count":5,"capacity":""}]},
+  "طينة": {"hr":48,"pop":53349,"equipment":[{"name":"شاحنة","count":10,"capacity":"0,9 طن"},{"name":"شاحنة ضاغطة","count":1,"capacity":"5,4 طن"},{"name":"شاحنة","count":1,"capacity":"5,1 طن"},{"name":"شاحنة قالبة","count":2,"capacity":"6,4 طن"},{"name":"تراكتوبال","count":1,"capacity":""},{"name":"ميني تراكس","count":1,"capacity":""}]},
+  "منزل شاكر": {"hr":12,"pop":0,"equipment":[{"name":"شاحنة ضاغطة","count":1,"capacity":"7 م 3"},{"name":"شاحنة ضاغطة","count":1,"capacity":"5 م 3"},{"name":"جرار ومجرورة","count":1,"capacity":""},{"name":"آلة شحن وحفر","count":1,"capacity":""},{"name":"شاحنة تفريغ الآبار","count":1,"capacity":""}]},
+  "العين": {"hr":41,"pop":53337,"equipment":[{"name":"آلة جارفة","count":2,"capacity":""},{"name":"جرار","count":3,"capacity":""},{"name":"شاحنة","count":5,"capacity":"3,5 طن"},{"name":"شاحنة","count":2,"capacity":"9 طن"},{"name":"آلة جارفة صغيرة الحجم","count":1,"capacity":""},{"name":"شاحنة ذات صهريج","count":1,"capacity":""}]},
+  "صفاقس": {"hr":322,"pop":801272,"equipment":[{"name":"جرار","count":8,"capacity":""},{"name":"تراكتوبال","count":2,"capacity":""},{"name":"آلة جارفة صغيرة الحجم","count":3,"capacity":""},{"name":"شاحنة قالبة","count":6,"capacity":""},{"name":"شاحنة قالبة","count":4,"capacity":""},{"name":"شاحنة صغيرة الحجم","count":3,"capacity":""},{"name":"حاوية غسيل","count":1,"capacity":""},{"name":"شاحنة ضاغطة","count":15,"capacity":""},{"name":"multibenne avec grue","count":1,"capacity":""},{"name":"شاحنة ضاغطة صغيرة الحجم","count":10,"capacity":""},{"name":"chargeuse sur pneu","count":2,"capacity":""},{"name":"Compacteur","count":6,"capacity":""},{"name":"مجرورة","count":24,"capacity":""}]},
+  "الغريبة": {"hr":9,"pop":0,"equipment":[{"name":"شاحنة قالبة","count":2,"capacity":"3,5 طن"},{"name":"آلة جارفة صغيرة الحجم","count":1,"capacity":""},{"name":"جرار ومجرورة","count":1,"capacity":"2,5 طن"},{"name":"صهريج شفط المياه","count":1,"capacity":"5 م 3"}]},
+  "قرقنة": {"hr":29,"pop":0,"equipment":[{"name":"شاحنة ضاغطة","count":6,"capacity":"6 م3"},{"name":"شاحنة قالبة","count":3,"capacity":"3,5 طن"},{"name":"شاحنة","count":2,"capacity":"10 طن"},{"name":"آلة حفر","count":1,"capacity":""},{"name":"آلة جارفة صغيرة الحجم","count":1,"capacity":""},{"name":"شاحنة وصهريج شفط مياه","count":1,"capacity":""},{"name":"جرافة","count":1,"capacity":""}]},
+  "ساقية الزيت": {"hr":21,"pop":0,"equipment":[{"name":"شاحنة ضاغطة","count":3,"capacity":"16 م3"},{"name":"شاحنة قالبة","count":4,"capacity":"5 طن"},{"name":"شاحنة","count":1,"capacity":"34 م 3"},{"name":"تراكس","count":1,"capacity":""},{"name":"آلة شحن كبيرة","count":1,"capacity":""},{"name":"آلة شحن صغيرة الحجم","count":1,"capacity":""}]},
+  "قرمدة": {"hr":0,"pop":0,"equipment":[]},
+  "بئر علي الشمالية": {"hr":0,"pop":0,"equipment":[]},
+  "بئر علي بن خليفة": {"hr":0,"pop":0,"equipment":[]},
+  "الحنشة": {"hr":0,"pop":0,"equipment":[]},
+  "جبنيانة": {"hr":0,"pop":0,"equipment":[]},
+  "النور": {"hr":0,"pop":0,"equipment":[]},
+  "الحاجب": {"hr":0,"pop":0,"equipment":[]},
+  "العوابد الخزانات": {"hr":0,"pop":0,"equipment":[]}
+};
+
+const EQUIP_ICONS = {
+  'شاحنة': '🚛', 'شاحنة قالبة': '🚛', 'شاحنة ضاغطة': '🚚', 'شاحنة ضاغطة صغيرة الحجم': '🚐',
+  'جرار': '🚜', 'جرارات': '🚜', 'جرار فلاحي': '🚜', 'جرار ومجرورة': '🚜',
+  'مجرورة': '🛻', 'تراكس': '🏗️', 'تراكتوبال': '🏗️', 'ميني تراكس': '🏗️',
+  'آلة جارفة': '⛏️', 'آلة جارفة صغيرة الحجم': '⛏️', 'رافعات': '🏗️',
+  'حاوية': '🗑️', 'حاوية غسيل': '🗑️', 'مكنسة كهربائية': '🧹',
+  'شاحنة رافعة': '🏗️', 'شاحنة مجهزة بسلم': '🪜',
+  'سيارة خفيفة قالبة': '🚗', 'شاحنة ذات صهريج': '🚰',
+  'صهريج شفط المياه': '🚰', 'شاحنة وصهريج شفط مياه': '🚰',
+  'شاحنة تفريغ الآبار': '🚰', 'آلة شحن وحفر': '⛏️',
+  'آلة شحن كبيرة': '⛏️', 'آلة شحن صغيرة الحجم': '⛏️',
+  'آلة حفر': '⛏️', 'جرافة': '🚜',
+  'شاحنة صغيرة الحجم': '🚐'
+};
+
+function getEquipIcon(name) {
+  if (EQUIP_ICONS[name]) return EQUIP_ICONS[name];
+  if (name.includes('شاحنة')) return '🚛';
+  if (name.includes('جرار')) return '🚜';
+  if (name.includes('آلة')) return '⛏️';
+  if (name.includes('حاوية')) return '🗑️';
+  return '🔧';
+}
+
+function renderMunEquipment(munName) {
+  // Try exact match first, then trimmed partial match
+  let info = MUN_EQUIPMENT_DATA[munName] || MUN_EQUIPMENT_DATA[munName.trim()];
+  if (!info) {
+    // Try partial match (strip trailing spaces from keys)
+    const key = Object.keys(MUN_EQUIPMENT_DATA).find(k => k.trim() === munName.trim());
+    info = key ? MUN_EQUIPMENT_DATA[key] : null;
+  }
+
+  const equipList = document.getElementById('munEquipList');
+  const hrInfo = document.getElementById('munHRInfo');
+  const popInfo = document.getElementById('munPopInfo');
+
+  if (!info || (info.equipment.length === 0 && info.hr === 0 && info.pop === 0)) {
+    if (equipList) equipList.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:12px">⚠️ لا توجد بيانات معدات متاحة</div>`;
+    if (hrInfo)   hrInfo.innerHTML   = `<div style="font-size:12px;color:var(--text-muted)">⚠️ لا توجد بيانات</div>`;
+    if (popInfo)  popInfo.innerHTML  = `<div style="font-size:12px;color:var(--text-muted)">⚠️ لا توجد بيانات</div>`;
+    return;
+  }
+
+  // Equipment list
+  if (equipList) {
+    if (info.equipment.length === 0) {
+      equipList.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:12px">⚠️ لا توجد معدات مسجلة</div>`;
+    } else {
+      const totalEquip = info.equipment.reduce((s, e) => s + (e.count || 0), 0);
+      equipList.innerHTML = `
+        <div style="font-size:10px;color:var(--text-muted);font-weight:700;margin-bottom:8px;padding:6px 10px;background:var(--bg);border-radius:10px;box-shadow:var(--neu-in);display:flex;justify-content:space-between;">
+          <span>📦 إجمالي المعدات</span><span style="color:var(--accent)">${totalEquip} قطعة</span>
+        </div>
+        ${info.equipment.map((e, i) => `
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg);border-radius:12px;box-shadow:var(--neu-sm);animation:kpiIn .4s cubic-bezier(.34,1.56,.64,1) ${i * 0.05}s both;">
+          <span style="font-size:20px;width:28px;text-align:center">${getEquipIcon(e.name)}</span>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:11px;font-weight:800;color:var(--text)">${e.name}</div>
+            ${e.capacity ? `<div style="font-size:9px;color:var(--text-muted);margin-top:2px">📐 ${e.capacity}</div>` : ''}
+          </div>
+          <div style="background:var(--accent);color:#fff;border-radius:10px;padding:4px 10px;font-size:12px;font-weight:900;min-width:32px;text-align:center">${e.count}</div>
+        </div>`).join('')}`;
+    }
+  }
+
+  // HR info
+  if (hrInfo) {
+    if (info.hr > 0) {
+      hrInfo.innerHTML = `
+        <div style="font-size:50px;margin-bottom:8px">👷</div>
+        <div style="font-size:36px;font-weight:900;color:var(--accent);line-height:1">${info.hr}</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:6px;font-weight:700">عدد عمال النظافة</div>
+        <div style="margin-top:12px;padding:10px 14px;background:var(--bg);border-radius:12px;box-shadow:var(--neu-sm);font-size:11px;color:var(--text-muted)">
+          معدل ${info.pop > 0 ? Math.round(info.pop / info.hr) + ' ساكن لكل عامل' : 'غير محدد'}
+        </div>`;
+    } else {
+      hrInfo.innerHTML = `<div style="font-size:30px;margin-bottom:8px">⚠️</div><div style="font-size:12px;color:var(--text-muted)">لا توجد بيانات موارد بشرية</div>`;
+    }
+  }
+
+  // Population info
+  if (popInfo) {
+    if (info.pop > 0) {
+      popInfo.innerHTML = `
+        <div style="font-size:50px;margin-bottom:8px">👥</div>
+        <div style="font-size:32px;font-weight:900;color:#059669;line-height:1">${info.pop.toLocaleString('ar')}</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:6px;font-weight:700">عدد السكان</div>
+        <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          ${info.equipment.length > 0 ? `<div style="padding:6px 14px;background:#dbeafe;color:#1e40af;border-radius:10px;font-size:10px;font-weight:800">${info.equipment.reduce((s,e)=>s+(e.count||0),0)} معدة</div>` : ''}
+          ${info.hr > 0 ? `<div style="padding:6px 14px;background:#dcfce7;color:#166534;border-radius:10px;font-size:10px;font-weight:800">${info.hr} عامل</div>` : ''}
+        </div>`;
+    } else {
+      popInfo.innerHTML = `<div style="font-size:30px;margin-bottom:8px">⚠️</div><div style="font-size:12px;color:var(--text-muted)">لا توجد بيانات سكانية</div>`;
+    }
+  }
+}
+
+function switchEquipTab(tab) {
+  ['equipment','hr','pop'].forEach(t => {
+    const el = document.getElementById(`equip-tab-${t}`);
+    if (el) el.style.display = (t === tab) ? 'block' : 'none';
+  });
+  document.querySelectorAll('.equip-tab-btn').forEach(btn => {
+    const isActive = btn.dataset.tab === tab;
+    btn.style.boxShadow = isActive ? 'var(--neu-in)' : 'var(--neu-sm)';
+    btn.style.color = isActive ? 'var(--accent)' : 'var(--text-muted)';
+    btn.style.fontWeight = isActive ? '900' : '800';
+  });
 }
 
 function closeMunPopup() {
@@ -1145,7 +1304,7 @@ const REPORTS_DATA = [
   },
   {
     "id": "r035",
-    "municipality": "بئر علي بنخليفة",
+    "municipality": "بئر علي بن خليفة",
     "location": "عمادة سديرات الجنوبية منطقة السوينية بقرب من جامع السوينية",
     "description": "منطقة سكانية و راحة غير مقبولة بقرب من سكان و طريق الرباط بين بئرعلى و الغريبة",
     "severity": "عالية",

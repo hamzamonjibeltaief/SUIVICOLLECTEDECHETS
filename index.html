@@ -491,7 +491,27 @@
         </div>
       </div>
       <div id="munPopupAreas"></div>
-      <button class="popup-report-btn" id="munPopupReportBtn">🔴 إبلاغ عن نقطة سوداء</button>
+
+      <!-- ── EQUIPMENT SECTION ── -->
+      <div id="munEquipSection" style="margin-top:14px;">
+        <!-- Equipment tabs -->
+        <div style="display:flex;gap:8px;margin-bottom:12px;border-bottom:1px solid var(--sh-dark);padding-bottom:8px;">
+          <button class="equip-tab-btn active" data-tab="equipment" onclick="switchEquipTab('equipment')" style="flex:1;padding:8px;border:none;border-radius:10px;font-family:var(--font);font-size:11px;font-weight:800;cursor:pointer;background:var(--bg);box-shadow:var(--neu-in);color:var(--accent);transition:all .2s">⚙️ المعدات</button>
+          <button class="equip-tab-btn" data-tab="hr" onclick="switchEquipTab('hr')" style="flex:1;padding:8px;border:none;border-radius:10px;font-family:var(--font);font-size:11px;font-weight:800;cursor:pointer;background:var(--bg);box-shadow:var(--neu-sm);color:var(--text-muted);transition:all .2s">👷 الموارد البشرية</button>
+          <button class="equip-tab-btn" data-tab="pop" onclick="switchEquipTab('pop')" style="flex:1;padding:8px;border:none;border-radius:10px;font-family:var(--font);font-size:11px;font-weight:800;cursor:pointer;background:var(--bg);box-shadow:var(--neu-sm);color:var(--text-muted);transition:all .2s">👥 السكان</button>
+        </div>
+        <div id="equip-tab-equipment">
+          <div id="munEquipList" style="display:flex;flex-direction:column;gap:7px;max-height:220px;overflow-y:auto;padding-left:2px;"></div>
+        </div>
+        <div id="equip-tab-hr" style="display:none;">
+          <div id="munHRInfo" style="text-align:center;padding:16px 0;"></div>
+        </div>
+        <div id="equip-tab-pop" style="display:none;">
+          <div id="munPopInfo" style="text-align:center;padding:16px 0;"></div>
+        </div>
+      </div>
+
+      <button class="popup-report-btn" id="munPopupReportBtn" style="margin-top:14px">🔴 إبلاغ عن نقطة سوداء</button>
     </div>
   </div>
 </div>
@@ -515,5 +535,6 @@
   })();
 </script>
 <script src="app.js" defer></script>
+<script src="equipement.js" defer></script>
 </body>
 </html>
