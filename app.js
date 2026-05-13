@@ -868,12 +868,46 @@ function bgCloseMunPopup(e) {
 ═══════════════════════════════════════════ */
 let _currentDateFilter = 'all';
 
+// Liste ordonnée des dates disponibles
+function getAvailableDates() {
+  return ['all', ...Array.from(new Set(DATA.map(r => r.date))).sort()];
+}
+
+let _dateNavIndex = 0; // 0 = 'all'
+
+function updateDateNavUI(date) {
+  const dates = getAvailableDates();
+  const idx   = dates.indexOf(date);
+  _dateNavIndex = idx === -1 ? 0 : idx;
+
+  const display = document.getElementById('dateNavDisplay');
+  if (display) {
+    display.textContent = date === 'all' ? '📅 جميع التواريخ' : '📅 ' + fmtDate(date);
+  }
+
+  const prev = document.getElementById('datePrevBtn');
+  const next = document.getElementById('dateNextBtn');
+  if (prev) prev.disabled = (_dateNavIndex === 0);
+  if (next) next.disabled = (_dateNavIndex === dates.length - 1);
+
+  const btnAll = document.getElementById('btn-all-dates');
+  if (btnAll) btnAll.classList.toggle('date-filter-active', date === 'all');
+}
+
+function navigateDate(direction) {
+  const dates  = getAvailableDates();
+  const newIdx = Math.max(0, Math.min(dates.length - 1, _dateNavIndex + direction));
+  filterByDate(dates[newIdx]);
+}
+
+function setDateNav(idx) {
+  _dateNavIndex = 0;
+  updateDateNavUI('all');
+}
+
 function filterByDate(date) {
   _currentDateFilter = date;
-  // Mise à jour visuelle des boutons
-  document.querySelectorAll('.date-filter-btn').forEach(b => {
-    b.classList.toggle('date-filter-active', b.dataset.date === date);
-  });
+  updateDateNavUI(date);
   renderQtyTable(date);
 }
 
@@ -2803,6 +2837,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Render initial de la page active
   renderQtyTable('all');
+  updateDateNavUI('all');
   loadReports();
 
   // Géolocation init (dès l'ouverture de la page pour accélérer)

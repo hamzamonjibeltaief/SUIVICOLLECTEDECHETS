@@ -175,27 +175,22 @@
     </div>
     <div class="neu-card" style="padding:16px 22px;margin-bottom:20px;animation:kpiIn .4s ease both">
       <div class="sec-title" style="--tc:#059669;margin-bottom:14px;font-size:13px">📅 اختر التاريخ — عرض الكميات حسب اليوم</div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-        <button onclick="filterByDate('all')" id="btn-all-dates" data-date="all" class="date-filter-btn date-filter-active">📅 جميع التواريخ</button>
-        <button onclick="filterByDate('2026-04-21')" id="btn-date-21" data-date="2026-04-21" class="date-filter-btn">📅 21 أفريل</button>
-        <button onclick="filterByDate('2026-04-22')" id="btn-date-22" data-date="2026-04-22" class="date-filter-btn">📅 22 أفريل</button>
-        <button onclick="filterByDate('2026-04-23')" id="btn-date-23" data-date="2026-04-23" class="date-filter-btn">📅 23 أفريل</button>
-        <button onclick="filterByDate('2026-04-24')" id="btn-date-24" data-date="2026-04-24" class="date-filter-btn">📅 24 أفريل</button>
-        <button onclick="filterByDate('2026-04-25')" id="btn-date-25" data-date="2026-04-25" class="date-filter-btn">📅 25 أفريل</button>
-        <button onclick="filterByDate('2026-04-27')" id="btn-date-27" data-date="2026-04-27" class="date-filter-btn">📅 27 أفريل</button>
-        <button onclick="filterByDate('2026-04-28')" id="btn-date-28" data-date="2026-04-28" class="date-filter-btn">📅 28 أفريل</button>
-        <button onclick="filterByDate('2026-04-29')" id="btn-date-29" data-date="2026-04-29" class="date-filter-btn">📅 29 أفريل</button>
-        <button onclick="filterByDate('2026-04-30')" id="btn-date-30" data-date="2026-04-30" class="date-filter-btn">📅 30 أفريل</button>
-        <button onclick="filterByDate('2026-05-02')" id="btn-date-02mai" data-date="2026-05-02" class="date-filter-btn">📅 02 ماي</button>
-        <button onclick="filterByDate('2026-05-04')" id="btn-date-04mai" data-date="2026-05-04" class="date-filter-btn">📅 04 ماي</button>
-        <button onclick="filterByDate('2026-05-05')" id="btn-date-05mai" data-date="2026-05-05" class="date-filter-btn">📅 05 ماي</button>
-        <button onclick="filterByDate('2026-05-06')" id="btn-date-06mai" data-date="2026-05-06" class="date-filter-btn">📅 06 ماي</button>
-        <button onclick="filterByDate('2026-05-07')" id="btn-date-07mai" data-date="2026-05-07" class="date-filter-btn">📅 07 ماي</button>
-        <button onclick="filterByDate('2026-05-08')" id="btn-date-08mai" data-date="2026-05-08" class="date-filter-btn">📅 08 ماي</button>
-        <button onclick="filterByDate('2026-05-09')" id="btn-date-09mai" data-date="2026-05-09" class="date-filter-btn">📅 09 ماي</button>
-        <button onclick="filterByDate('2026-05-11')" id="btn-date-11mai" data-date="2026-05-11" class="date-filter-btn">📅 11 ماي</button>
-        <button onclick="filterByDate('2026-05-12')" id="btn-date-12mai" data-date="2026-05-12" class="date-filter-btn">📅 12 ماي</button>
-        <div id="qtyCount" style="font-size:11px;color:var(--text-muted);font-weight:600;background:var(--bg);border-radius:10px;padding:5px 12px;box-shadow:var(--neu-in)"></div>
+      <div style="display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap">
+        <!-- Bouton "Tous" -->
+        <button onclick="filterByDate('all');setDateNav(-1)" id="btn-all-dates" data-date="all" class="date-filter-btn date-filter-active" style="flex-shrink:0">📅 جميع التواريخ</button>
+        <!-- Navigateur flèches -->
+        <div style="display:flex;align-items:center;gap:10px;flex:1;justify-content:center;min-width:220px">
+          <button id="datePrevBtn" onclick="navigateDate(-1)" class="date-nav-arrow" title="التاريخ السابق">&#8592;</button>
+          <div id="dateNavDisplay" style="
+            font-size:15px;font-weight:800;color:var(--green);
+            background:var(--bg-dark);border-radius:12px;
+            padding:8px 22px;box-shadow:var(--neu-in);
+            min-width:140px;text-align:center;letter-spacing:.5px
+          ">📅 جميع التواريخ</div>
+          <button id="dateNextBtn" onclick="navigateDate(1)" class="date-nav-arrow" title="التاريخ التالي">&#8594;</button>
+        </div>
+        <!-- Compteur -->
+        <div id="qtyCount" style="font-size:11px;color:var(--text-muted);font-weight:600;background:var(--bg);border-radius:10px;padding:5px 12px;box-shadow:var(--neu-in);flex-shrink:0"></div>
       </div>
     </div>
     <div class="reports-table-wrap">
